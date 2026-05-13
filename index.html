@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <script src="./script.js" defer></script>
+    <script src="./clavier.js" defer></script>
+    <script src="./features.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <header>
+        <div></div>
+        <h1>Pendu</h1>
+        <div>
+            <img id="ShadowMode" src="./img/lune.png" alt="Mode Sombre">
+        </div>
+    </header>
+
+    <main>
+        <button id="rejouer">Rejouer</button>
+
+        <div id="mainContent">
+            <div id="reglesDiv">
+                <div id="reglesText">
+                    <h2>Règles du jeu</h2>
+
+                    <p><strong>Objectif :</strong> Devinez le mot caché avant que le pendu ne soit complet.</p>
+                    <ul>
+                        <li>Tapez une lettre sur votre clavier.</li>
+                        <li>Chaque erreur ajoute un trait au dessin.</li>
+                        <li>Vous avez droit à 8 erreurs maximum.</li>
+                    </ul>
+                    <p><em>Bonne chance !</em></p>
+                </div>
+                <button id="regles">Règles du jeu</button>
+            </div>
+
+            <div id="game">
+                <canvas id="canvas"></canvas>
+                <div id="word"></div>
+                <div id="lettersUsed"></div>
+                <div id="clavier"></div>
+            </div>
+
+            <div></div>
+        </div>
+    </main>
+</body>
+
+</html>
