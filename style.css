@@ -18,6 +18,7 @@ body {
 }
 
 header {
+    height: 10vh;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -188,8 +189,26 @@ canvas {
 }
 
 @media (max-width: 500px) {
-    #clavier {
-        grid-template-columns: repeat(6, 1fr);
-        gap: 5px;
+    body {
+        overflow-y: auto;
+    }
+
+    #mainContent {
+        display: grid;
+        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        padding: 0 20px;
+    }
+
+    #reglesDiv {
+        padding-bottom: 50px;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
     }
 }
