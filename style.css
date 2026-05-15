@@ -188,6 +188,46 @@ canvas {
     box-shadow: none;
 }
 
+#importZone {
+    margin-top: 15px; 
+    text-align: center;
+}
+
+#importJson {
+    display: none;
+}
+
+#btnImportLabel {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #555;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+#btnImportLabel:hover {
+    background-color: #666;
+}
+
+#btnResetDico {
+    margin-top: 8px;
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 11px;
+    display: none;
+}
+
+#reglesText.reglesShow {
+    max-height: none !important;
+    height: auto !important;
+}
+
 @media (max-width: 500px) {
     body {
         overflow-y: auto;

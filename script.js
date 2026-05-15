@@ -6,24 +6,35 @@ canvas.height = 300;
 
 let boxSize = 20;
 
-const listeMots = [
+const listeMotsParDefaut = [
     "CHIMPANZE", "GIRAFE", "KANGOUROU", "ORNITHORYNQUE", "ZEBRE", "ALBATROS", "GALAXIE", "VOLCAN", "ARCHIPEL", "HORIZON", 
     "NEBULEUSE", "ANTARCTIQUE", "PARAPLUIE", "BICYCLETTE", "REFRIGERATEUR", "TELECOPIE", "AMPOULE", "ALGORITHME", "PROCESSEUR", 
     "MOLECULE", "SATELLITE", "LABORATOIRE", "ESPIEGLE", "XYLOPHONE", "ZIGZAG", "WHISKY", "PHARAON", "LABYRINTHE",
 ];
 
-// Création du mot en underscores
+// Gestion du dico
+let dictionnaireActuel = [...listeMotsParDefaut];
+const sauvegardeDico = localStorage.getItem("dico_perso");
 
-let word = listeMots[Math.floor(Math.random() * listeMots.length)];
-
-if (word === "" || word === null) {
-    word = "BICYCLETTE";
+// Charger dico perso
+if (sauvegardeDico) {
+    try {
+        dictionnaireActuel = JSON.parse(sauvegardeDico);
+    } catch(e) {
+        localStorage.removeItem("dico_perso");
+    }
 }
 
+// Choix du mot
+let word = dictionnaireActuel[Math.floor(Math.random() * dictionnaireActuel.length)];
+
+if (word === "" || word === null || word === undefined) {
+    word = "BICYCLETTE";
+}
+word = word.toUpperCase();
+
 const wordDiv = document.getElementById("word");
-
 wordDiv.textContent = "";
-
 let wordTab = [];
 
 for (let i = 0; i < word.length; i++) {
@@ -208,3 +219,58 @@ const draw = () => {
         }
     }
 };
+
+// Logique de récup d'un dico perso
+
+const importInput = document.getElementById("importJson");
+const btnResetDico = document.getElementById("btnResetDico");
+
+if (localStorage.getItem("dico_perso")) {
+    btnResetDico.style.display = "inline-block";
+}
+
+// Chargement fichier
+importInput?.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const json = JSON.parse(e.target.result);
+            
+            // Vérif si c'est un tableau
+            if (Array.isArray(json) && json.length > 0) {
+                // Suppression des espaces et mise en majuscules
+                const propresMots = json.map(m => m.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")); 
+                
+                localStorage.setItem("dico_perso", JSON.stringify(propresMots));
+                
+                // Import ok
+                Swal.fire({
+                    title: "Dictionnaire importé !",
+                    text: propresMots.length + ' mots chargés. La partie va redémarrer.',
+                    icon: "success"
+                }).then(() => {
+                    location.reload()
+                });
+                
+                // Erreurs
+            } else {
+                throw new Error("Le format JSON doit être un tableau de mots : ['MOT1', 'MOT2']");
+            }
+        } catch (err) {
+            Swal.fire("Erreur", "Fichier JSON invalide. Format attendu : ['MOT1', 'MOT2']", "error");
+        }
+    };
+    reader.readAsText(file);
+});
+
+// Bouton réinitialisation
+
+btnResetDico?.addEventListener("click", () => {
+    localStorage.removeItem("dico_perso");
+    Swal.fire("Réinitialisé", "Suppression du dictionnaire perso", "info").then(() => {
+        location.reload();
+    });
+});
