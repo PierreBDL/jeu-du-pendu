@@ -2,24 +2,24 @@ const btnShadowMode = document.getElementById("ShadowMode");
 const btnRejouer = document.getElementById("rejouer");
 const btnRegles = document.getElementById("regles");
 
-// Mode sombre
+// Dark mode
 
 btnShadowMode?.addEventListener("click", () => {
     document.body.classList.toggle("shadowMode");
 
-    // Btn rejouer
+    // Play again button
     btnRejouer.classList.toggle("shadowModeBtn");
 
-    // Btn règles
+    // Settings button
     btnRegles.classList.toggle("shadowModeBtn");
 
     if (document.body.classList.contains("shadowMode")) {
         btnShadowMode.src = "./img/soleil.png";
-        btnShadowMode.alt = "Mode clair";
+        btnShadowMode.alt = "Light Mode";
         localStorage.setItem("shadowMode", "true");
     } else {
         btnShadowMode.src = "./img/lune.png";
-        btnShadowMode.alt = "Mode sombre";
+        btnShadowMode.alt = "Dark Mode";
         localStorage.setItem("shadowMode", "false");
     }
 
@@ -30,24 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("shadowMode") === "true") {
         document.body.classList.add("shadowMode");
         btnShadowMode.src = "./img/soleil.png";
-        btnShadowMode.alt = "Mode clair";
+        btnShadowMode.alt = "Light Mode";
 
-        // Btn rejouer
+        // Play again button
         btnRejouer?.classList.add("shadowModeBtnRejouer");
 
-        // Btn règles
+        // Settings button
         btnRegles?.classList.add("shadowModeBtnRegles");
     }
 });
 
 
-// Rejouer
+// Play Again
 
 btnRejouer?.addEventListener("click", () => {
     location.reload();
 });
 
-// Règles
+// Settings
 
 btnRegles?.addEventListener("click", () => {
     if (!document.getElementById("reglesText").classList.contains("reglesShow")) {
@@ -58,8 +58,8 @@ btnRegles?.addEventListener("click", () => {
 });
 
 
-// Difficulté
-let difficulty = localStorage.getItem("difficulty") || "facile";
+// Difficulty
+var difficulty = localStorage.getItem("difficulty") || "easy";
 
 function changeDifficulty (newDifficulty) {
     document.getElementById(difficulty).classList.remove("active");
@@ -68,16 +68,16 @@ function changeDifficulty (newDifficulty) {
     localStorage.setItem("difficulty", difficulty);
 }
 
-document.getElementById("facile")?.addEventListener("click", () => {
-    changeDifficulty("facile");
+document.getElementById("easy")?.addEventListener("click", () => {
+    changeDifficulty("easy");
 });
 
-document.getElementById("moyen")?.addEventListener("click", () => {
-    changeDifficulty("moyen");
+document.getElementById("medium")?.addEventListener("click", () => {
+    changeDifficulty("medium");
 });
 
-document.getElementById("difficile")?.addEventListener("click", () => {
-    changeDifficulty("difficile");
+document.getElementById("hard")?.addEventListener("click", () => {
+    changeDifficulty("hard");
 });
 
 document.addEventListener("DOMContentLoaded", () => {

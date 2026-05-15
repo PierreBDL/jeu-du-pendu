@@ -6,30 +6,30 @@ canvas.height = 300;
 
 let boxSize = 20;
 
-const listeMotsParDefaut = [
-    "CHIMPANZE", "GIRAFE", "KANGOUROU", "ORNITHORYNQUE", "ZEBRE", "ALBATROS", "GALAXIE", "VOLCAN", "ARCHIPEL", "HORIZON",
-    "NEBULEUSE", "ANTARCTIQUE", "PARAPLUIE", "BICYCLETTE", "REFRIGERATEUR", "TELECOPIE", "AMPOULE", "ALGORITHME", "PROCESSEUR",
-    "MOLECULE", "SATELLITE", "LABORATOIRE", "ESPIEGLE", "XYLOPHONE", "ZIGZAG", "WHISKY", "PHARAON", "LABYRINTHE",
+const defaultWordsList = [
+    "CHIMPANZEE", "GIRAFFE", "KANGAROO", "PLATYPUS", "ZEBRA", "ALBATROSS", "GALAXY", "VOLCANO", "ARCHIPELAGO", "HORIZON",
+    "NEBULA", "ANTARCTICA", "UMBRELLA", "BICYCLE", "REFRIGERATOR", "FACSIMILE", "BULB", "ALGORITHM", "PROCESSOR",
+    "MOLECULE", "SATELLITE", "LABORATORY", "MISCHIEVOUS", "XYLOPHONE", "ZIGZAG", "WHISKY", "PHARAOH", "LABYRINTH",
 ];
 
-// Gestion du dico
-let dictionnaireActuel = [...listeMotsParDefaut];
-const sauvegardeDico = localStorage.getItem("dico_perso");
+// Dictionary management
+let currentDictionary = [...defaultWordsList];
+const dictionaryBackup = localStorage.getItem("custom_dict");
 
-// Charger dico perso
-if (sauvegardeDico) {
+// Load custom dictionary
+if (dictionaryBackup) {
     try {
-        dictionnaireActuel = JSON.parse(sauvegardeDico);
+        currentDictionary = JSON.parse(dictionaryBackup);
     } catch (e) {
-        localStorage.removeItem("dico_perso");
+        localStorage.removeItem("custom_dict");
     }
 }
 
-// Choix du mot
-let word = dictionnaireActuel[Math.floor(Math.random() * dictionnaireActuel.length)];
+// Word selection
+let word = currentDictionary[Math.floor(Math.random() * currentDictionary.length)];
 
 if (word === "" || word === null || word === undefined) {
-    word = "BICYCLETTE";
+    word = "BICYCLE";
 }
 word = word.toUpperCase();
 
@@ -44,27 +44,27 @@ for (let i = 0; i < word.length; i++) {
 wordDiv.textContent = wordTab.join(" ");
 
 
-// Cliquer sur une lettre
+// Click on a letter
 
 let lettersUsed = [];
 const lettersUsedDiv = document.getElementById("lettersUsed");
 let mistakes = 0;
 let isMistakesMessageWasPrint = false;
 
-// Clique sur le clavier
+// Click on keyboard
 
 document.addEventListener("keydown", (event) => {
     if (event.keyCode >= 65 && event.keyCode <= 90) {
-        const lettreCliquee = event.key.toUpperCase();
+        const clickedLetter = event.key.toUpperCase();
 
-        // Désactiver bouton
+        // Disable button
         btnAlreadyDisable = false;
 
         let btnsletters = document.querySelectorAll(".letterBtn");
         btnsletters.forEach(btn => {
-            if (btn.value === lettreCliquee && btn.disabled) {
+            if (btn.value === clickedLetter && btn.disabled) {
                 btnAlreadyDisable = true;
-            } else if (btn.value === lettreCliquee) {
+            } else if (btn.value === clickedLetter) {
                 btn.disabled = true;
             }
         });
@@ -73,29 +73,29 @@ document.addEventListener("keydown", (event) => {
             return;
         }
 
-        // Ajout de lettre utilisée
+        // Add used letter
         const letterUsed = document.createElement("span");
-        letterUsed.textContent = lettreCliquee;
+        letterUsed.textContent = clickedLetter;
         lettersUsedDiv.appendChild(letterUsed);
 
-        // Remplacer les lettres
-        if (word.includes(lettreCliquee)) {
+        // Replace letters
+        if (word.includes(clickedLetter)) {
             for (let i = 0; i < word.length; i++) {
-                if (word[i] === lettreCliquee) {
-                    wordTab[i] = lettreCliquee;
+                if (word[i] === clickedLetter) {
+                    wordTab[i] = clickedLetter;
                 }
             }
             wordDiv.textContent = wordTab.join(" ");
         } else {
-            // Si la lettre est incorrecte
+            // If the letter is incorrect
             mistakes++;
             draw();
         }
 
-        // Vérif si on gagne
+        // Check if we win
 
         if (!wordTab.includes("_")) {
-            Swal.fire("Victoire!\n Le mot était " + word);
+            Swal.fire("Victory!\n The word was " + word);
             document.querySelectorAll(".letterBtn").forEach(btn => {
                 btn.disabled = true;
             });
@@ -104,40 +104,40 @@ document.addEventListener("keydown", (event) => {
 })
 
 const useLetter = () => {
-    const lettreCliquee = event.target.value;
+    const clickedLetter = event.target.value;
 
-    event.target.disabled = true; // Désactiver btn
+    event.target.disabled = true; // Disable button
 
-    // Ajout de lettre utilisée
+    // Add used letter
     const letterUsed = document.createElement("span");
-    letterUsed.textContent = lettreCliquee;
+    letterUsed.textContent = clickedLetter;
     lettersUsedDiv.appendChild(letterUsed);
 
-    // Remplacer les lettres
-    if (word.includes(lettreCliquee)) {
+    // Replace letters
+    if (word.includes(clickedLetter)) {
         for (let i = 0; i < word.length; i++) {
-            if (word[i] === lettreCliquee) {
-                wordTab[i] = lettreCliquee;
+            if (word[i] === clickedLetter) {
+                wordTab[i] = clickedLetter;
             }
         }
         wordDiv.textContent = wordTab.join(" ");
     } else {
-        // Si la lettre est incorrecte
+        // If the letter is incorrect
         mistakes++;
         draw();
     }
 
-    // Vérif si on gagne
+    // Check if we win
 
     if (!wordTab.includes("_")) {
-        Swal.fire("Victoire!\n Le mot était " + word);
+        Swal.fire("Victory!\n The word was " + word);
         document.querySelectorAll(".letterBtn").forEach(btn => {
             btn.disabled = true;
         });
     }
 }
 
-// Dessin
+// Draw
 const draw = () => {
     if (document.body.classList.contains("shadowMode")) {
         ctx.strokeStyle = "white";
@@ -149,7 +149,7 @@ const draw = () => {
     ctx.lineCap = "round";
 
     switch (difficulty) {
-        case "facile":
+        case "easy":
             if (mistakes > 0) {
                 ctx.beginPath();
                 ctx.moveTo(100, 300);
@@ -218,20 +218,20 @@ const draw = () => {
                 ctx.lineTo(255, 250);
                 ctx.stroke();
 
-                // Défaite
+                // Defeat
                 if (!isMistakesMessageWasPrint) {
-                    Swal.fire("Perdu!\n Le mot était " + word);
+                    Swal.fire("Lost!\n The word was " + word);
                     document.querySelectorAll(".letterBtn").forEach(btn => {
                         btn.disabled = true;
                         isMistakesMessageWasPrint = true;
 
-                        // Révéler mot
+                        // Reveal word
                         wordDiv.textContent = word;
                     });
                 }
             }
             break;
-        case "moyen":
+        case "medium":
             if (mistakes > 0) {
                 ctx.beginPath();
                 ctx.moveTo(100, 300);
@@ -290,21 +290,21 @@ const draw = () => {
                 ctx.lineTo(255, 250);
                 ctx.stroke();
 
-                // Défaite
+                // Defeat
                 if (!isMistakesMessageWasPrint) {
-                    Swal.fire("Perdu!\n Le mot était " + word);
+                    Swal.fire("Lost!\n The word was " + word);
                     document.querySelectorAll(".letterBtn").forEach(btn => {
                         btn.disabled = true;
                         isMistakesMessageWasPrint = true;
 
-                        // Révéler mot
+                        // Reveal word
                         wordDiv.textContent = word;
                     });
                 }
             }
             break;
 
-        case "difficile":
+        case "hard":
             if (mistakes > 0) {
                 ctx.beginPath();
                 ctx.moveTo(100, 300);
@@ -348,14 +348,14 @@ const draw = () => {
                 ctx.lineTo(255, 250);
                 ctx.stroke();
 
-                // Défaite
+                // Defeat
                 if (!isMistakesMessageWasPrint) {
-                    Swal.fire("Perdu!\n Le mot était " + word);
+                    Swal.fire("Lost!\n The word was " + word);
                     document.querySelectorAll(".letterBtn").forEach(btn => {
                         btn.disabled = true;
                         isMistakesMessageWasPrint = true;
 
-                        // Révéler mot
+                        // Reveal word
                         wordDiv.textContent = word;
                     });
                 }
@@ -364,16 +364,16 @@ const draw = () => {
     }
 };
 
-// Logique de récup d'un dico perso
+// Logic to retrieve a custom dictionary
 
 const importInput = document.getElementById("importJson");
 const btnResetDico = document.getElementById("btnResetDico");
 
-if (localStorage.getItem("dico_perso")) {
+if (localStorage.getItem("custom_dict")) {
     btnResetDico.style.display = "inline-block";
 }
 
-// Chargement fichier
+// File loading
 importInput?.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -383,38 +383,38 @@ importInput?.addEventListener("change", (event) => {
         try {
             const json = JSON.parse(e.target.result);
 
-            // Vérif si c'est un tableau
+            // Check if it's an array
             if (Array.isArray(json) && json.length > 0) {
-                // Suppression des espaces et mise en majuscules
-                const propresMots = json.map(m => m.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+                // Remove spaces and convert to uppercase
+                const cleanWords = json.map(m => m.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
 
-                localStorage.setItem("dico_perso", JSON.stringify(propresMots));
+                localStorage.setItem("custom_dict", JSON.stringify(cleanWords));
 
-                // Import ok
+                // Import successful
                 Swal.fire({
-                    title: "Dictionnaire importé !",
-                    text: propresMots.length + ' mots chargés. La partie va redémarrer.',
+                    title: "Dictionary imported!",
+                    text: cleanWords.length + ' words loaded. The game will restart.',
                     icon: "success"
                 }).then(() => {
                     location.reload()
                 });
 
-                // Erreurs
+                // Errors
             } else {
-                throw new Error("Le format JSON doit être un tableau de mots : ['MOT1', 'MOT2']");
+                throw new Error("JSON format must be an array of words: ['WORD1', 'WORD2']");
             }
         } catch (err) {
-            Swal.fire("Erreur", "Fichier JSON invalide. Format attendu : ['MOT1', 'MOT2']", "error");
+            Swal.fire("Error", "Invalid JSON file. Expected format: ['WORD1', 'WORD2']", "error");
         }
     };
     reader.readAsText(file);
 });
 
-// Bouton réinitialisation
+// Reset button
 
 btnResetDico?.addEventListener("click", () => {
-    localStorage.removeItem("dico_perso");
-    Swal.fire("Réinitialisé", "Suppression du dictionnaire perso", "info").then(() => {
+    localStorage.removeItem("custom_dict");
+    Swal.fire("Reset", "Custom dictionary deleted", "info").then(() => {
         location.reload();
     });
 });
