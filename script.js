@@ -7,8 +7,8 @@ canvas.height = 300;
 let boxSize = 20;
 
 const listeMotsParDefaut = [
-    "CHIMPANZE", "GIRAFE", "KANGOUROU", "ORNITHORYNQUE", "ZEBRE", "ALBATROS", "GALAXIE", "VOLCAN", "ARCHIPEL", "HORIZON", 
-    "NEBULEUSE", "ANTARCTIQUE", "PARAPLUIE", "BICYCLETTE", "REFRIGERATEUR", "TELECOPIE", "AMPOULE", "ALGORITHME", "PROCESSEUR", 
+    "CHIMPANZE", "GIRAFE", "KANGOUROU", "ORNITHORYNQUE", "ZEBRE", "ALBATROS", "GALAXIE", "VOLCAN", "ARCHIPEL", "HORIZON",
+    "NEBULEUSE", "ANTARCTIQUE", "PARAPLUIE", "BICYCLETTE", "REFRIGERATEUR", "TELECOPIE", "AMPOULE", "ALGORITHME", "PROCESSEUR",
     "MOLECULE", "SATELLITE", "LABORATOIRE", "ESPIEGLE", "XYLOPHONE", "ZIGZAG", "WHISKY", "PHARAON", "LABYRINTHE",
 ];
 
@@ -20,7 +20,7 @@ const sauvegardeDico = localStorage.getItem("dico_perso");
 if (sauvegardeDico) {
     try {
         dictionnaireActuel = JSON.parse(sauvegardeDico);
-    } catch(e) {
+    } catch (e) {
         localStorage.removeItem("dico_perso");
     }
 }
@@ -148,75 +148,219 @@ const draw = () => {
     ctx.lineWidth = 4;
     ctx.lineCap = "round";
 
-    if (mistakes > 0) {
-        ctx.beginPath();
-        ctx.moveTo(100, 300);
-        ctx.lineTo(200, 300);
-        ctx.stroke();
-    }
+    switch (difficulty) {
+        case "facile":
+            if (mistakes > 0) {
+                ctx.beginPath();
+                ctx.moveTo(100, 300);
+                ctx.lineTo(200, 300);
+                ctx.stroke();
+            }
 
-    if (mistakes > 1) {
-        ctx.beginPath();
-        ctx.moveTo(130, 300);
-        ctx.lineTo(130, 80);
-        ctx.stroke();
-    }
+            if (mistakes > 1) {
+                ctx.beginPath();
+                ctx.moveTo(130, 300);
+                ctx.lineTo(130, 80);
+                ctx.stroke();
+            }
 
-    if (mistakes > 2) {
-        ctx.beginPath();
-        ctx.moveTo(130, 80);
-        ctx.lineTo(230, 80);
-        ctx.stroke();
-    }
+            if (mistakes > 2) {
+                ctx.beginPath();
+                ctx.moveTo(130, 80);
+                ctx.lineTo(230, 80);
+                ctx.stroke();
+            }
 
-    if (mistakes > 3) {
-        ctx.beginPath();
-        ctx.moveTo(230, 80);
-        ctx.lineTo(230, 110);
-        ctx.stroke();
-    }
+            if (mistakes > 3) {
+                ctx.beginPath();
+                ctx.moveTo(230, 80);
+                ctx.lineTo(230, 110);
+                ctx.stroke();
+            }
 
-    if (mistakes > 4) {
-        ctx.beginPath();
-        ctx.arc(230, 130, 20, 0, 2 * Math.PI);
-        ctx.stroke();
-    }
+            if (mistakes > 4) {
+                ctx.beginPath();
+                ctx.arc(230, 130, 20, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
 
-    if (mistakes > 5) {
-        ctx.beginPath();
-        ctx.moveTo(230, 150);
-        ctx.lineTo(230, 210);
-        ctx.stroke();
-    }
+            if (mistakes > 5) {
+                ctx.beginPath();
+                ctx.moveTo(230, 150);
+                ctx.lineTo(230, 210);
+                ctx.stroke();
+            }
 
-    if (mistakes > 6) {
-        ctx.beginPath();
-        ctx.moveTo(230, 160);
-        ctx.lineTo(205, 190);
-        ctx.moveTo(230, 160);
-        ctx.lineTo(255, 190);
-        ctx.stroke();
-    }
+            if (mistakes > 6) {
+                ctx.beginPath();
+                ctx.moveTo(230, 160);
+                ctx.lineTo(205, 190);
+                ctx.stroke();
+            }
 
-    if (mistakes > 7) {
-        ctx.beginPath();
-        ctx.moveTo(230, 210);
-        ctx.lineTo(205, 250);
-        ctx.moveTo(230, 210);
-        ctx.lineTo(255, 250);
-        ctx.stroke();
+            if (mistakes > 7) {
+                ctx.beginPath();
+                ctx.moveTo(230, 160);
+                ctx.lineTo(255, 190);
+                ctx.stroke();
+            }
 
-        // Défaite
-        if (!isMistakesMessageWasPrint) {
-            Swal.fire("Perdu!\n Le mot était " + word);
-            document.querySelectorAll(".letterBtn").forEach(btn => {
-                btn.disabled = true;
-                isMistakesMessageWasPrint = true;
+            if (mistakes > 8) {
+                ctx.beginPath();
+                ctx.moveTo(230, 210);
+                ctx.lineTo(205, 250);
+                ctx.stroke();
+            }
 
-                // Révéler mot
-                wordDiv.textContent = word;
-            });
-        }
+            if (mistakes > 9) {
+                ctx.beginPath();
+                ctx.moveTo(230, 210);
+                ctx.lineTo(255, 250);
+                ctx.stroke();
+
+                // Défaite
+                if (!isMistakesMessageWasPrint) {
+                    Swal.fire("Perdu!\n Le mot était " + word);
+                    document.querySelectorAll(".letterBtn").forEach(btn => {
+                        btn.disabled = true;
+                        isMistakesMessageWasPrint = true;
+
+                        // Révéler mot
+                        wordDiv.textContent = word;
+                    });
+                }
+            }
+            break;
+        case "moyen":
+            if (mistakes > 0) {
+                ctx.beginPath();
+                ctx.moveTo(100, 300);
+                ctx.lineTo(200, 300);
+                ctx.stroke();
+            }
+
+            if (mistakes > 1) {
+                ctx.beginPath();
+                ctx.moveTo(130, 300);
+                ctx.lineTo(130, 80);
+                ctx.stroke();
+            }
+
+            if (mistakes > 2) {
+                ctx.beginPath();
+                ctx.moveTo(130, 80);
+                ctx.lineTo(230, 80);
+                ctx.stroke();
+            }
+
+            if (mistakes > 3) {
+                ctx.beginPath();
+                ctx.moveTo(230, 80);
+                ctx.lineTo(230, 110);
+                ctx.stroke();
+            }
+
+            if (mistakes > 4) {
+                ctx.beginPath();
+                ctx.arc(230, 130, 20, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+
+            if (mistakes > 5) {
+                ctx.beginPath();
+                ctx.moveTo(230, 150);
+                ctx.lineTo(230, 210);
+                ctx.stroke();
+            }
+
+            if (mistakes > 6) {
+                ctx.beginPath();
+                ctx.moveTo(230, 160);
+                ctx.lineTo(205, 190);
+                ctx.moveTo(230, 160);
+                ctx.lineTo(255, 190);
+                ctx.stroke();
+            }
+
+            if (mistakes > 7) {
+                ctx.beginPath();
+                ctx.moveTo(230, 210);
+                ctx.lineTo(205, 250);
+                ctx.moveTo(230, 210);
+                ctx.lineTo(255, 250);
+                ctx.stroke();
+
+                // Défaite
+                if (!isMistakesMessageWasPrint) {
+                    Swal.fire("Perdu!\n Le mot était " + word);
+                    document.querySelectorAll(".letterBtn").forEach(btn => {
+                        btn.disabled = true;
+                        isMistakesMessageWasPrint = true;
+
+                        // Révéler mot
+                        wordDiv.textContent = word;
+                    });
+                }
+            }
+            break;
+
+        case "difficile":
+            if (mistakes > 0) {
+                ctx.beginPath();
+                ctx.moveTo(100, 300);
+                ctx.lineTo(200, 300);
+                ctx.moveTo(130, 300);
+                ctx.lineTo(130, 80);
+                ctx.moveTo(130, 80);
+                ctx.lineTo(230, 80);
+                ctx.moveTo(230, 80);
+                ctx.lineTo(230, 110);
+                ctx.stroke();
+            }
+
+            if (mistakes > 2) {
+                ctx.beginPath();
+                ctx.arc(230, 130, 20, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+
+            if (mistakes > 3) {
+                ctx.beginPath();
+                ctx.moveTo(230, 150);
+                ctx.lineTo(230, 210);
+                ctx.stroke();
+            }
+
+            if (mistakes > 4) {
+                ctx.beginPath();
+                ctx.moveTo(230, 160);
+                ctx.lineTo(205, 190);
+                ctx.moveTo(230, 160);
+                ctx.lineTo(255, 190);
+                ctx.stroke();
+            }
+
+            if (mistakes > 5) {
+                ctx.beginPath();
+                ctx.moveTo(230, 210);
+                ctx.lineTo(205, 250);
+                ctx.moveTo(230, 210);
+                ctx.lineTo(255, 250);
+                ctx.stroke();
+
+                // Défaite
+                if (!isMistakesMessageWasPrint) {
+                    Swal.fire("Perdu!\n Le mot était " + word);
+                    document.querySelectorAll(".letterBtn").forEach(btn => {
+                        btn.disabled = true;
+                        isMistakesMessageWasPrint = true;
+
+                        // Révéler mot
+                        wordDiv.textContent = word;
+                    });
+                }
+            }
+            break;
     }
 };
 
@@ -238,14 +382,14 @@ importInput?.addEventListener("change", (event) => {
     reader.onload = (e) => {
         try {
             const json = JSON.parse(e.target.result);
-            
+
             // Vérif si c'est un tableau
             if (Array.isArray(json) && json.length > 0) {
                 // Suppression des espaces et mise en majuscules
-                const propresMots = json.map(m => m.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")); 
-                
+                const propresMots = json.map(m => m.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+
                 localStorage.setItem("dico_perso", JSON.stringify(propresMots));
-                
+
                 // Import ok
                 Swal.fire({
                     title: "Dictionnaire importé !",
@@ -254,7 +398,7 @@ importInput?.addEventListener("change", (event) => {
                 }).then(() => {
                     location.reload()
                 });
-                
+
                 // Erreurs
             } else {
                 throw new Error("Le format JSON doit être un tableau de mots : ['MOT1', 'MOT2']");

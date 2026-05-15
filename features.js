@@ -56,3 +56,30 @@ btnRegles?.addEventListener("click", () => {
         document.getElementById("reglesText").classList.remove("reglesShow");
     }
 });
+
+
+// Difficulté
+let difficulty = localStorage.getItem("difficulty") || "facile";
+
+function changeDifficulty (newDifficulty) {
+    document.getElementById(difficulty).classList.remove("active");
+    document.getElementById(newDifficulty).classList.add("active");
+    difficulty = newDifficulty;
+    localStorage.setItem("difficulty", difficulty);
+}
+
+document.getElementById("facile")?.addEventListener("click", () => {
+    changeDifficulty("facile");
+});
+
+document.getElementById("moyen")?.addEventListener("click", () => {
+    changeDifficulty("moyen");
+});
+
+document.getElementById("difficile")?.addEventListener("click", () => {
+    changeDifficulty("difficile");
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById(difficulty)?.classList.add("active");
+});

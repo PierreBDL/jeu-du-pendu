@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake</title>
+    <script src="./features.js" defer></script>
     <script src="./script.js" defer></script>
     <script src="./clavier.js" defer></script>
-    <script src="./features.js" defer></script>
     <link rel="stylesheet" href="./style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -41,8 +41,17 @@
                         <input type="file" id="importJson" accept=".json">
                         <button id="btnResetDico">Dictionnaire par défaut</button>
                     </div>
+
+                    <div id="difficulty">
+                        <h2>Difficulté</h2>
+                        <div>
+                            <button class="btnDifficulty" id="facile">Facile (10 essais)</button>
+                            <button class="btnDifficulty" id="moyen">Moyen (8 essais)</button>
+                            <button class="btnDifficulty" id="difficile">Diificile (5 essais)</button>
+                        </div>
+                    </div>
                 </div>
-                <button id="regles">Règles du jeu</button>
+                <button id="regles">Paramètres</button>
             </div>
 
             <div id="game">
